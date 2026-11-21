@@ -1,0 +1,54 @@
+# ROM command-table region $8308-$837f, hexdump of evidence/rom_8000_bfff.bin
+# (captured from device X by MD sweeps, run 1; sha256 of rom_8000_bfff.bin =
+#   f9e64c892ee6b704d06678b96f7af7d68561d6fb097905aa7726c8f166c93c6b)
+# generated 2026-11-17 00:20 UTC by python read of the saved image (local static analysis, no device I/O):
+#   data=open('rom_8000_bfff.bin','rb').read(); base=0x8000
+#   print rows of 8 bytes from 0x8308..0x837f, then decode 4-byte entries from $8310
+
+0x008308  ae 2a 15 8c ce 4f 02 ee  .*...O..
+0x008310  42 46 04 e4 42 4d 05 36  BF..BM.6
+0x008318  42 d2 06 52 42 53 07 18  B..RBS..
+0x008320  42 54 08 52 44 43 08 a4  BT.RDC..
+0x008328  44 46 09 02 44 55 0a 20  DF..DU. 
+0x008330  47 20 06 24 47 44 06 32  G .$GD.2
+0x008338  47 4f 06 24 47 54 05 d8  GO.$GT..
+0x008340  48 45 0e 82 4c 4f 0f c6  HE..LO..
+0x008348  4d 20 13 14 4d 44 11 64  M ..MD.d
+0x008350  4d 4d 13 14 4d 53 14 98  MM..MS..
+0x008358  4f 46 16 bc 50 c1 21 bc  OF..P.!.
+0x008360  50 46 17 3a 54 20 05 88  PF.:T ..
+0x008368  54 4d 18 70 54 52 05 88  TM.pTR..
+0x008370  54 54 05 a4 56 45 0f c0  TT..VE..
+0x008378  ff ff 41 fa 00 26 43 f8  ..A..&C.
+
+decoded 4-byte entries (2-char name + handler offset from $8000), from $8310:
+  $008310: BF -> $0084e4
+  $008314: BM -> $008536
+  $008318: BR -> $008652  (bit7 set -> HELP prints NO-prefix name)
+  $00831c: BS -> $008718
+  $008320: BT -> $008852
+  $008324: DC -> $0088a4
+  $008328: DF -> $008902
+  $00832c: DU -> $008a20
+  $008330: G  -> $008624
+  $008334: GD -> $008632
+  $008338: GO -> $008624
+  $00833c: GT -> $0085d8
+  $008340: HE -> $008e82
+  $008344: LO -> $008fc6
+  $008348: M  -> $009314
+  $00834c: MD -> $009164
+  $008350: MM -> $009314
+  $008354: MS -> $009498
+  $008358: OF -> $0096bc
+  $00835c: PA -> $00a1bc  (bit7 set -> HELP prints NO-prefix name)
+  $008360: PF -> $00973a
+  $008364: T  -> $008588
+  $008368: TM -> $009870
+  $00836c: TR -> $008588
+  $008370: TT -> $0085a4
+  $008374: VE -> $008fc0
+  $008378: FFFF FFFF  <- end-of-table marker
+
+# cross-check: entry order BF BM BR BS BT DC DF DU G GD GO GT HE LO M MD MM MS OF PA PF T TM TR TT VE
+# equals the HELP list order (pi_gt5_help.log:2), where bit7 entries BR/PA print as NOBR/NOPA.

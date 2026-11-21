@@ -1,0 +1,46 @@
+   RX 03 | '\x03
+   RX 03 | '\x03
+   RX 03 | '\x03
+TX '\r'
+   RX 0d 0a 45 52 52 4f 52 20 0d 0a 0d 0a 54 55 54 4f 52 20 20 31 2e 33 20 3e 20 | '\r\nERROR \r\n\r\nTUTOR  1.3 > 
+   -> '\r\nERROR \r\n\r\nTUTOR  1.3 > 
+TX 'MD 1000'
+   RX 4d 44 20 31 30 30 30 | 'MD 1000
+   -> 'MD 1000   [NO PROMPT]
+TX 'MM 1000'
+   RX 4d 4d 20 31 30 30 30 | 'MM 1000
+   -> 'MM 1000   [NO PROMPT]
+TX '70\r'
+   RX 37 30 0d 0a 45 52 52 4f 52 20 0d 0a 0d 0a 54 55 54 4f 52 20 20 31 2e 33 20 3e 20 | '70\r\nERROR \r\n\r\nTUTOR  1.3 > 
+   -> '70\r\nERROR \r\n\r\nTUTOR  1.3 >    [NO PROMPT]
+   RX 03 | '\x03
+TX 'MD 1000'
+   RX 4d 44 20 31 30 30 30 | 'MD 1000
+   -> 'MD 1000   [NO PROMPT]
+=== restore ACIA control register $10040 = $15 (ROM init value) ===
+TX 'MM 10040'
+   RX 4d 4d 20 31 30 30 34 30 | 'MM 10040
+   -> 'MM 10040   [NO PROMPT]
+TX '15\r'
+   RX 31 35 0d 0a 57 48 41 54 0d 0a 0d 0a 54 55 54 4f 52 20 20 31 2e 33 20 3e 20 | '15\r\nWHAT\r\n\r\nTUTOR  1.3 > 
+   -> '15\r\nWHAT\r\n\r\nTUTOR  1.3 >    [NO PROMPT]
+   RX 03 | '\x03
+TX 'MD 640'
+   RX 4d 44 20 36 34 30 | 'MD 640
+   -> 'MD 640   [NO PROMPT]
+=== probe 4800 8N1 ===
+   RX f8 00 00 00 f8 00 00 | '\xf8\x00\x00\x00\xf8\x00\x00
+TX '\r'
+   RX f8 00 00 00 f8 00 00 | '\xf8\x00\x00\x00\xf8\x00\x00
+   -> '\xf8\x00\x00\x00\xf8\x00\x00   [NO PROMPT]
+TX 'DF'
+   RX 00 | '\x00
+   -> '\x00   [NO PROMPT]
+=== probe 1200 7E1 ===
+TX '\r'
+   RX 0d 0a 57 48 41 54 0d 0a 0d 0a 54 55 54 4f 52 20 20 31 2e 33 20 3e 20 | '\r\nWHAT\r\n\r\nTUTOR  1.3 > 
+   -> '\r\nWHAT\r\n\r\nTUTOR  1.3 > 
+TX 'DF'
+   RX 44 46 | 'DF
+   -> 'DF   [NO PROMPT]
+DONE

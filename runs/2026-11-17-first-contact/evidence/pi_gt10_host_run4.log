@@ -1,0 +1,17 @@
+### RUN 4 host-side verification Mon 16 Nov 2026 10:42:42 PM UTC (all commands run via ssh pi)
+$ ls -l /dev/ttySC*
+crw-rw---- 1 root dialout 240, 0 Nov 16 22:14 /dev/ttySC0
+crw-rw---- 1 root dialout 240, 1 Nov 16 13:53 /dev/ttySC1
+$ fuser /dev/ttySC0
+(fuser rc=1)
+$ stty -F /dev/ttySC0 -a
+speed 4800 baud; rows 0; columns 0; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>;
+eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R;
+werase = ^W; lnext = ^V; discard = ^O; min = 0; time = 0;
+$ readlink -f /sys/class/tty/ttySC0/device
+/sys/devices/platform/soc/3f215080.spi/spi_master/spi1/spi1.0
+$ cat /sys/bus/spi/devices/spi1.0/of_node/compatible
+nxp,sc16is752^@
+$ uname -a
+Linux raspberrypi 5.10.103-v7+ #1529 SMP Tue Mar 8 12:21:37 GMT 2022 armv7l GNU/Linux

@@ -1,0 +1,11 @@
+{
+  "_comment": "Copy to .env-adjacent config/explorer.json (gitignored) and adapt, or just edit config/explorer.lab.json. jail_allow feeds scripts/jail-props.py; the netcheck gate checks the same list.",
+  "solver":    { "url": "http://10.0.0.50:8001", "modelID": "Qwen3.8-Flash-Next", "ctx": 131072 },
+  "verifier":  { "url": "http://10.0.0.29:8031", "modelID": "gpt-oss-120b", "ctx": 32768 },
+  "target":    { "ssh": "thorx", "host": "10.0.0.29", "user": "lab" },
+  "jail_allow": [
+    "10.0.0.50/32",
+    "10.0.0.29/32",
+    "198.51.100.0/24"
+  ]
+}

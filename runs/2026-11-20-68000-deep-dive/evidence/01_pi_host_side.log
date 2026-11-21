@@ -1,0 +1,37 @@
+=== HOST EVIDENCE Fri 20 Nov 2026 11:15:04 PM UTC ===
+Linux raspberrypi 5.10.103-v7+ #1529 SMP Tue Mar 8 12:21:37 GMT 2022 armv7l GNU/Linux
+--- /boot/config.txt relevant lines
+66:enable_uart=1
+69:dtoverlay=sc16is752-spi1,int_pin=24
+--- modules
+sc16is7xx              20480  0
+regmap_spi             16384  1 sc16is7xx
+regmap_i2c             16384  1 sc16is7xx
+spi_bcm2835aux         16384  0
+--- DT node /sys/firmware/devicetree/base/soc/spi@7e215080/sc16is752@0
+compatible              n   x   p   ,   s   c   1   6   i   s   7   5   2  \0 
+name                    s   c   1   6   i   s   7   5   2  \0 
+clocks                 \0  \0  \0 215 
+interrupts             \0  \0  \0 030  \0  \0  \0 002 
+reg                    \0  \0  \0  \0 
+spi-max-frequency      \0   =  \t  \0 
+--- SPI device symlink
+total 0
+lrwxrwxrwx 1 root root 0 Nov 20 19:46 spi1.0 -> ../../../devices/platform/soc/3f215080.spi/spi_master/spi1/spi1.0
+--- tty drivers
+/dev/tty             /dev/tty        5       0 system:/dev/tty
+/dev/console         /dev/console    5       1 system:console
+/dev/ptmx            /dev/ptmx       5       2 system
+/dev/vc/0            /dev/vc/0       4       0 system:vtmaster
+unknown              /dev/ttySC    240 0-7 serial
+ttyAMA               /dev/ttyAMA   204 64-77 serial
+ttyprintk            /dev/ttyprintk   5       3 console
+serial               /dev/ttyS       4      64 serial
+pty_slave            /dev/pts      136 0-1048575 pty:slave
+pty_master           /dev/ptm      128 0-1048575 pty:master
+unknown              /dev/tty        4 1-63 console
+--- /dev/ttySC*
+crw-rw---- 1 root dialout 240, 0 Nov 20 23:12 /dev/ttySC0
+crw-rw---- 1 root dialout 240, 1 Nov 20 20:04 /dev/ttySC1
+--- id
+uid=1001(explorer) gid=1001(explorer) groups=1001(explorer),4(adm),20(dialout),27(sudo)

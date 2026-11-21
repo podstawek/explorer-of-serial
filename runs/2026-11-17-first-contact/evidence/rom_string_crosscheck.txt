@@ -1,0 +1,24 @@
+# Every string device X printed live during the session, located in the ROM image
+# that X itself dumped over the wire (evidence/rom_8000_bfff.bin, md5 aec584900279b2c0d1fb206c234a5ce4).
+# This cross-validates that the recorded transcripts came from this firmware.
+prompt/banner          b'TUTOR  1.3 '         ROM $82FC  bytes 54 55 54 4f 52 20 20 31 2e 33 20
+WHAT                   b'WHAT'                ROM $8098  bytes 57 48 41 54
+SYNTAX ERROR           b'SYNTAX ERROR '       ROM $808A  bytes 53 59 4e 54 41 58 20 45 52 52 4f 52 20
+PHYSICAL ADDRESS=      b'PHYSICAL ADDRESS='   ROM $80E0  bytes 50 48 59 53 49 43 41 4c 20 41 44 44 52 45 53 53 3d
+BREAKPOINTS            b'BREAKPOINTS'         ROM $86DE  bytes 42 52 45 41 4b 50 4f 49 4e 54 53
+*TRANSPARENT* ...      b'TRANSPARENT'         ROM $9909  bytes 54 52 41 4e 53 50 41 52 45 4e 54
+PRINTER NOT READY      b'PRINTER NOT READY'   ROM $9E06  bytes 50 52 49 4e 54 45 52 20 4e 4f 54 20 52 45 41 44 59
+FORMAT=                b'FORMAT='             ROM $97F0  bytes 46 4f 52 4d 41 54 3d
+CHAR NULL=             b'CHAR NULL'           ROM $97FB  bytes 43 48 41 52 20 4e 55 4c 4c
+C/R                    b'C/R'                 ROM $9806  bytes 43 2f 52
+OPTIONS                b'OPTIONS'             ROM $9813  bytes 4f 50 54 49 4f 4e 53
+TIMEOUT                b'TIMEOUT'             ROM $A02C  bytes 54 49 4d 45 4f 55 54
+ILLEGAL INSTRUCTION    b'ILLEGAL INSTRUCTION' ROM $8E48  bytes 49 4c 4c 45 47 41 4c 20 49 4e 53 54 52 55 43 54 49 4f 4e
+AT BREAKPOINT          b'AT BREAKPOINT'       ROM $8E5C  bytes 41 54 20 42 52 45 41 4b 50 4f 49 4e 54
+ TRAP ERROR            b' TRAP ERROR'         ROM $9994  bytes 20 54 52 41 50 20 45 52 52 4f 52
+BUS                    b'BUS '                ROM $8032  bytes 42 55 53 20
+NOT HEX=               b'NOT HEX'             ROM $912A  bytes 4e 4f 54 20 48 45 58
+CHKSUM=                b'CHKSUM'              ROM $9134  bytes 43 48 4b 53 55 4d
+INVALID ADDRESS=       b'INVALID ADDRESS'     ROM $9AB6  bytes 49 4e 56 41 4c 49 44 20 41 44 44 52 45 53 53
+IS NOT A HEX DIGIT     b'IS NOT A HEX DIGIT'  ROM $9BDC  bytes 49 53 20 4e 4f 54 20 41 20 48 45 58 20 44 49 47 49 54
+\n\nBREAK escape       b'\n\nBREAK\r\n\n'     ROM $9E90  bytes 0a 0a 42 52 45 41 4b 0d 0a 0a

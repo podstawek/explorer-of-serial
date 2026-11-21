@@ -1,0 +1,79 @@
+# ROM disassembly: ACIA unit-1/unit-2 base selection, unit-2 data write, inactivity TIMEOUT countdown
+# produced locally with: r2 -q -a m68k -b 32 -m 0x8000 -c 'pd N @ A' rom_8000_bfff.bin  (image captured in run 1 via MD sweeps)
+
+### base-pointer routines: a0 = $10040 (unit 1) / a0 = $10041 (unit 2), each overridable from RAM
+            0x00009c72      41f900010040   lea.l 0x10040.l, a0
+            0x00009c78      4ab80624       tst.l 0x624.w
+        ┌─< 0x00009c7c      6704           beq.b 0x9c82
+        │   0x00009c7e      20780624       movea.l 0x624.w, a0
+       ┌└─> 0x00009c82      4e75           rts
+       ╎    0x00009c84      41f900010041   lea.l 0x10041.l, a0
+       ╎    0x00009c8a      4ab80628       tst.l 0x628.w
+       └──< 0x00009c8e      67f2           beq.b 0x9c82
+            0x00009c90      20780628       movea.l 0x628.w, a0
+            0x00009c94      4e75           rts
+            0x00009c96      4bf80540       lea.l 0x540.w, a5
+            0x00009c9a      2c4d           movea.l a5, a6
+
+### init: control $43 then saved format byte, unit 1 ($64C.w) then unit 2 ($64D.w)
+            0x00009f7a      48e78080       movem.l d0/a0, -(a7)
+            0x00009f7e      203c0000c350   move.l 0xc350, d0
+        ┌─> 0x00009f84      5380           subq.l 0x1, d0
+        └─< 0x00009f86      66fc           bne.b 0x9f84
+            0x00009f88      6100fce8       bsr.w 0x9c72
+            0x00009f8c      10bc0043       move.b 0x43, (a0)
+            0x00009f90      10b8064c       move.b 0x64c.w, (a0)
+            0x00009f94      6100fcee       bsr.w 0x9c84
+            0x00009f98      10bc0043       move.b 0x43, (a0)
+            0x00009f9c      10b8064d       move.b 0x64d.w, (a0)
+            0x00009fa0      4cdf0101       movem.l (a7)+, d0/a0
+            0x00009fa4      4e75           rts
+
+### unit-2 TRANSMIT: bsr base(unit2) then move.b d7,0x2(a0)  => data register = $10043
+       ┌──> 0x000098f8      5380           subq.l 0x1, d0
+       └──< 0x000098fa      66fc           bne.b 0x98f8
+        ╎   0x000098fc      61000386       bsr.w 0x9c84
+        ╎   0x00009900      11470002       move.b d7, 0x2(a0)
+        └─< 0x00009904      6000e92c       bra.w 0x8232
+            0x00009908      2a54           movea.l (a4), a5
+            0x0000990a      5241           addq.w 0x1, d1
+            0x0000990c      4e535041       link.w a3, 0x5041
+
+### dual-unit poll loop: a3 = unit-2 base, a0 = unit-1 base; unit-2 status bit1 test and write to 0x2(a3) = $10043; inactivity countdown #$320c8 -> TIMEOUT string at $A02C
+            0x00009fd4      48e77090       movem.l d1-d3/a0/a3, -(a7)
+            0x00009fd8      6100fcaa       bsr.w 0x9c84
+            0x00009fdc      2648           movea.l a0, a3
+            0x00009fde      6100fc92       bsr.w 0x9c72
+            0x00009fe2      243c000320c8   move.l 0x320c8, d2
+        ┌─> 0x00009fe8      614a           bsr.b 0xa034
+       ┌──< 0x00009fea      6704           beq.b 0x9ff0
+       │╎   0x00009fec      615c           bsr.b 0xa04a
+       │└─< 0x00009fee      60f8           bra.b 0x9fe8
+       └┌─> 0x00009ff0      7601           moveq 0x1, d3
+      ┌┌──> 0x00009ff2      6140           bsr.b 0xa034
+     ┌────< 0x00009ff4      6622           bne.b 0xa018
+     │╎╎╎   0x00009ff6      5382           subq.l 0x1, d2
+    ┌─────< 0x00009ff8      6b2a           bmi.b 0xa024
+    ││╎╎╎   0x00009ffa      5383           subq.l 0x1, d3
+    ││└───< 0x00009ffc      66f4           bne.b 0x9ff2
+    ││ ╎╎   0x00009ffe      103804e6       move.b 0x4e6.w, d0
+    ││┌───< 0x0000a002      670c           beq.b 0xa010
+    │││╎╎   0x0000a004      1213           move.b (a3), d1
+    │││╎╎   0x0000a006      02010002       andi.b 0x2, d1
+    │││╎└─< 0x0000a00a      67e4           beq.b 0x9ff0
+    │││╎    0x0000a00c      17400002       move.b d0, 0x2(a3)
+    ││└───> 0x0000a010      263c0000a028   move.l 0xa028, d3
+    ││ └──< 0x0000a016      60da           bra.b 0x9ff2
+    │└────> 0x0000a018      611a           bsr.b 0xa034
+    │   ┌─< 0x0000a01a      6702           beq.b 0xa01e
+
+### TIMEOUT path: countdown expires (bmi) -> lea $a02c(pc),a5 ; $a02c is the string "TIMEOUT"
+      ╎└──< 0x0000a020      6bdc           bmi.b 0x9ffe
+      └───< 0x0000a022      60f4           bra.b 0xa018
+        ╎   0x0000a024      4bfa0006       lea.l 0xa02c(pc), a5
+        └─< 0x0000a028      6000fe5a       bra.w 0x9e84
+            0x0000a02c      5449           addq.w 0x2, a1
+            0x0000a02e      4d45           invalid
+--- bytes at $a02c ---
+- offset -  2C2D 2E2F 3031 3233 3435 3637 3839 3A3B  CDEF0123456789AB
+0x0000a02c  5449 4d45 4f55 5404 1210 0201            TIMEOUT.....

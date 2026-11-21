@@ -1,0 +1,48 @@
+Live transcripts recorded from device X on /dev/ttySC0 (4800 8N1) during the session,
+before the device hung. Runner used: python3/pyserial script rob4.py (resync = ETX then CR
+before each command), seq2.py (send arg+CR, print raw rx), dump2.py (continuous MD capture).
+------------------------------------------------------------------
+prompt/banner observed (device -> host):   \r\nTUTOR  1.3 >
+empty line  ->  WHAT
+unknown cmd ->  WHAT
+------------------------------------------------------------------
+HE
+  (prints the monitor's command help list; includes NOBR and NOPA entries)
+------------------------------------------------------------------
+MD 0
+  000000  00 00 04 44  00 00 81 46  ...            (SSP=$00000444, RESET PC=$00008146)
+MD 10000
+  BUS TRAP ERROR
+------------------------------------------------------------------
+DU 5000 5010
+  PHYSICAL ADDRESS=00005000 00005010
+  S0030000FC
+  S1135000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAC
+  S1045010FF9C
+  S9030000FC
+------------------------------------------------------------------
+DC $1000        ->  $1000=&4096
+.D0             ->  .D0=1234ABCD
+.D0:  1234ABCD CR  -> .D0=00000000 ?   (then read back .D0 -> 1234ABCD)
+OF 4000         ->  R0=00000000 ... R7=00000000
+PF              ->  FORMAT=   15 15 / CHAR NULL=00 00 / C/R  NULL=00 00 / OPTIONS@0004E6
+TM              ->  *TRANSPARENT* EXIT=$01 = CTL A      (Ctrl-A exits)
+BR / NOBR       ->  BREAKPOINTS
+------------------------------------------------------------------
+PROGRAM WRITE + RUN (definition-of-done item 4)
+MM 4000, bytes written: 70 00 72 05 74 09 D0 41 D0 42 4A FC
+MD 4000
+  004000  70 00 72 05  74 09 D0 41  D0 42 4A FC  FF FF FF FF
+G 4000
+  PHYSICAL ADDRESS=00004000
+  ILLEGAL INSTRUCTION
+  PC=0000400A SR=2700=.S7..... US=FFFFFFFF SS=00000776
+  D0=0000000E D1=00000005 D2=00000009 D3=00000010 ...
+  --------------------00400A    4AFC                 DC.W    $4AFC
+  => D0 = 5+9 = 0x0E : the 68000 instructions really executed on the device CPU,
+     and the monitor disassembled the stopping instruction itself.
+------------------------------------------------------------------
+LAST COMMAND BEFORE THE HANG (2026-11-15 ~22:47 UTC)
+PA
+  PRINTER NOT READY
+  <no further output ever; next command "TR 4000" was not even echoed>

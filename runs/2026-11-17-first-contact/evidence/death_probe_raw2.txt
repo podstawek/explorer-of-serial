@@ -1,0 +1,31 @@
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+== fuser /dev/ttySC0 /dev/ttySC1
+(no process holds the ports)
+opened ttySC0 4800-8N1; TIOCMGET=0x1E6
+CR                                             sent=b'\r'          rx= 0 b''
+HE CR                                          sent=b'HE\r'        rx= 0 b''
+ETX then CR                                    sent=b'\x03\r'      rx= 0 b''
+NOPA CR                                        sent=b'NOPA\r'      rx= 0 b''
+after 1s BREAK + CR                            sent=b'\r'          rx= 0 b''
+DTR=False RTS=False then CR                    sent=b'\r'          rx= 0 b''
+DTR=False RTS=True then CR                     sent=b'\r'          rx= 0 b''
+DTR=True RTS=False then CR                     sent=b'\r'          rx= 0 b''
+DTR=True RTS=True then CR                      sent=b'\r'          rx= 0 b''
+port closed 10s, reopened, CR                  sent=b'\r'          rx= 0 b''
+ttySC0 4800-8N1 CR                             sent=b'\r'          rx= 0 b''
+ttySC0 4800-8E1 CR                             sent=b'\r'          rx= 0 b''
+ttySC0 4800-7N1 CR                             sent=b'\r'          rx= 0 b''
+ttySC0 9600-8N1 CR                             sent=b'\r'          rx= 0 b''
+ttySC0 2400-8N1 CR                             sent=b'\r'          rx= 0 b''
+ttySC0 1200-8N1 CR                             sent=b'\r'          rx= 0 b''
+ttySC0 19200-8N1 CR                            sent=b'\r'          rx= 0 b''
+ttySC0 115200-8N1 CR                           sent=b'\r'          rx= 0 b''
+ttySC1 4800 CR                                 sent=b'\r'          rx= 0 b''
+ttySC1 9600 CR                                 sent=b'\r'          rx= 0 b''
+ttySC1 2400 CR                                 sent=b'\r'          rx= 0 b''
+ttySC1 1200 CR                                 sent=b'\r'          rx= 0 b''
+ttySC1 19200 CR                                sent=b'\r'          rx= 0 b''
+ttySC1 115200 CR                               sent=b'\r'          rx= 0 b''
+TOTAL BYTES RECEIVED FROM DEVICE: 0

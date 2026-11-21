@@ -1,0 +1,11 @@
+# Run 5 ground-truth probe, 2026-11-16 23:18 UTC (read-only)
+$ ssh pi 'ls -l /dev/ttySC*; fuser /dev/ttySC0; echo fuser_rc=$?; uptime'
+crw-rw---- 1 root dialout 240, 0 Nov 16 22:14 /dev/ttySC0
+crw-rw---- 1 root dialout 240, 1 Nov 16 13:53 /dev/ttySC1
+fuser_rc=1
+ 23:18:33 up 11:09,  2 users,  load average: 0.00, 0.00, 0.00
+$ ssh pi 'cd /home/explorer/probe && timeout 60 python3 gt4.py'
+ETX -> b'\x03'
+TX '\r' -> RX b'\r\nWHAT\r\n\r\nTUTOR  1.3 > '
+TX 'DF' -> RX b'DF\r\nPC=000099B8 SR=2700=.S7..... US=FFFFFFFF SS=0000077E \r\nD0=00310030 D1=61024D44 D2=02000000 D3=00000010 \r\nD4=00000032 D5=8000002C D6=FFFFFFFF D7=00000000 \r\nA0=00010001 A1=00008350 A2=00000549 A3=00000000 \r\nA4=00010000 A5=00000540 A6=0000054A A7=0000077E \r\n--------------------0099B8    3400                 MOVE.W  D0,D2 \r\n\r\nTUTOR  1.3 > '
+TX 'MD 0' -> RX b'MD 0\r\n000000    00 00 04 44 00 00 81 46  00 00 80 30 00 00 80 3A  ...D...F...0...:\r\n\r\nTUTOR  1.3 > '

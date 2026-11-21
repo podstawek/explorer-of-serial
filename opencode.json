@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "model": "spark/qwen38",
+  "default_agent": "explorer",
+  "autostart": false,
+  "share": { "enabled": false },
+  "compaction": { "auto": true },
+  "permissions": {
+    "webfetch": "deny",
+    "websearch": "deny",
+    "doom_loop": "allow"
+  },
+  "provider": {
+    "spark": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "spark (DGX Spark, 10.0.0.50)",
+      "options": {
+        "baseURL": "http://10.0.0.50:8001/v1",
+        "timeout": false
+      },
+      "models": {
+        "qwen38": {
+          "id": "Qwen3.8-Flash-Next",
+          "name": "Qwen3.8-Flash-Next (solver)",
+          "options": {
+            "temperature": 0.2,
+            "chat_template_kwargs": { "thinking": true }
+          },
+          "limit": { "context": 131072, "output": 16384 }
+        }
+      }
+    },
+    "thorgal": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "thorgal (10.0.0.29)",
+      "options": {
+        "baseURL": "http://10.0.0.29:8031/v1",
+        "timeout": false
+      },
+      "models": {
+        "verifier": {
+          "id": "verifier",
+          "name": "gpt-oss-120b (verifier)",
+          "options": {
+            "temperature": 0.1,
+            "chat_template_kwargs": { "thinking": true, "thinking_budget": 4096 }
+          },
+          "limit": { "context": 32768, "output": 8192 }
+        }
+      }
+    }
+  }
+}

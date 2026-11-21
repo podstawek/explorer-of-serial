@@ -1,0 +1,27 @@
+### resync ETX -> b'\x03'
+### resync CR -> b'\r\nWHAT\r\n\r\nTUTOR  1.3 > '
+--- line-buffer persistence test ---
+### step1: send "T" (no CR) -> b'T'
+### HE -> b'HE\r\nWHAT\r\n\r\nTUTOR  1.3 > '
+### step3: ETX -> b'\x03'
+### HE -> b'HE\r\nWHAT\r\n\r\nTUTOR  1.3 > '
+--- no-arg syntax probes ---
+### T -> b'T\r\nPHYSICAL ADDRESS=00009206\r\n\r\n.PC within "DEBUGGER"\x07\r\nPC=000099B8 SR=2700=.S7..... US=FFFFFFFF SS=0000077E \r\nD0=00310030 D1=61024D44 D2=02000000 D3=00000010 \r\nD4=00000032 D5=8000002C D6=FFFFFFFF D7=00000000 \r\nA0=00010001 A1=00008350 A2=00000549 A3=00000000 \r\nA4=00010000 A5=00000540 A6=0000054A A7=0000077E \r\n--------------------0099B8    3400                 MOVE.W  D0,D2 \r\n\r\nTUTOR  1.3 :> 
+### TT -> b'TT\r\nSYNTAX ERROR \r\n\r\nTUTOR  1.3 > '
+### VE -> b'VE\r\n'
+###   (no prompt) ETX -> b''
+###   (no prompt) CR -> b''
+### BF -> b''
+###   (no prompt) ETX -> b''
+###   (no prompt) CR -> b''
+### BS -> b''
+###   (no prompt) ETX -> b''
+###   (no prompt) CR -> b''
+### BT -> b''
+###   (no prompt) ETX -> b''
+###   (no prompt) CR -> b'\r\nTIMEOUT\r\nTUTOR  1.3 > '
+### MS -> b'MS\r\nSYNTAX ERROR \r\n\r\nTUTOR  1.3 > '
+### M -> b'M\r\nSYNTAX ERROR \r\n\r\nTUTOR  1.3 > '
+--- health ---
+###  -> b'\r\nWHAT\r\n\r\nTUTOR  1.3 > '
+### DF -> b'DF\r\nPC=000099B8 SR=2700=.S7..... US=FFFFFFFF SS=0000077E \r\nD0=00310030 D1=61024D44 D2=02000000 D3=00000010 \r\nD4=00000032 D5=8000002C D6=FFFFFFFF D7=00000000 \r\nA0=00010001 A1=00008350 A2=00000549 A3=00000000 \r\nA4=00010000 A5=00000540 A6=0000054A A7=0000077E \r\n--------------------0099B8    3400                 MOVE.W  D0,D2 \r\n\r\nTUTOR  1.3 > '

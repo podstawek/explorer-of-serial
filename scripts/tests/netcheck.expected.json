@@ -1,0 +1,6 @@
+{
+  "_comment": "Expected netcheck outcomes for the allow lists in tests/. keep = always-pass subset; full = what precise jail mode allows.",
+  "allow": ["127.0.0.1/32", "10.0.0.50/32", "10.0.0.29/32", "198.51.100.0/24"],
+  "denied_internet": ["1.1.1.1", "8.8.8.8", "208.67.222.222", "203.0.113.10"],
+  "denied_lan_canaries": ["10.0.0.1", "10.0.0.14", "10.0.0.9"]
+}

@@ -1,0 +1,18 @@
+=== FINAL liveness re-check Sat Nov 21 02:39:25 UTC 2026 (device silent since ~01:15-01:22 UTC) ===
+--- ssh pi 'cd /home/explorer/scratch; python3 pcm.py'
+/dev/ttySC0 TIOCMGET = 0x01E6
+   pyserial modem lines: CTS=True DSR=True RI=True CD=True  dsrdtr=False rtscts=False out_of_waiting=0
+   after write: out_waiting=0 in_waiting=0
+   0.3s later:  out_waiting=0 in_waiting=0  read=b''
+/dev/ttySC1 TIOCMGET = 0x01E6
+   pyserial modem lines: CTS=True DSR=True RI=True CD=True  dsrdtr=False rtscts=False out_of_waiting=0
+   after write: out_waiting=0 in_waiting=0
+   0.3s later:  out_waiting=0 in_waiting=0  read=b''
+driver still bound: 1
+
+--- single HE probe with BREAK first:
+reply bytes = 0
+--- additional backoff re-check Sat Nov 21 03:54:26 UTC 2026 ---
+HE reply bytes = 0
+--- gate-round-3 backoff re-check Sat Nov 21 04:15:32 UTC 2026 ---
+HE reply bytes = 0

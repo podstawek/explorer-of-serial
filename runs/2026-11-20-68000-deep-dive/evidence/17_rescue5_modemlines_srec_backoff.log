@@ -1,0 +1,27 @@
+=== A: DTR/RTS pulse patterns (possible hard-reset lines) ===
+  dtr=True rts=True held             bytes=0 b''
+  dtr=True rts=False held            bytes=0 b''
+  dtr=False rts=True held            bytes=0 b''
+  dtr=False rts=False held           bytes=0 b''
+  pulse assert dtr=True rts=True     bytes=0 b''
+  pulse assert dtr=True rts=False    bytes=0 b''
+  pulse assert dtr=False rts=True    bytes=0 b''
+  pulse assert dtr=False rts=False   bytes=0 b''
+=== B: BREAK + immediate CR, and 1200-baud break ===
+  break20ms+CR                       bytes=0 b''
+  break50ms+CR                       bytes=0 b''
+  break250ms+CR                      bytes=0 b''
+  break1000ms+CR                     bytes=0 b''
+=== C: poke S-record / monitor-ish sequences ===
+  b'S104000000FC\r'        -> 0 b''
+  b'S9030000FC\r'          -> 0 b''
+  b'\r'                    -> 0 b''
+  b'LO\r'                  -> 0 b''
+  b'VE\r'                  -> 0 b''
+  b'PF\r'                  -> 0 b''
+  b'HE\r'                  -> 0 b''
+=== D: long backoffs ===
+  after 300s                         bytes=0 b''
+  after 300s                         bytes=0 b''
+  after 300s                         bytes=0 b''
+=== RESCUE5 COMPLETE ===

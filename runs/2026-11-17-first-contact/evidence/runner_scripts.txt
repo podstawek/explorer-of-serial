@@ -1,0 +1,120 @@
+# runner scripts used for all live probes (verbatim, still on target)
+## /home/explorer/probe/rob4.py
+import sys, time, serial
+port='/dev/ttySC0'
+gap=float(sys.argv[1]); cmds=sys.argv[2:]
+s=serial.Serial(port,4800,timeout=0.05,rtscts=False,dsrdtr=False,write_timeout=2)
+def rd(t):
+    s.timeout=t; buf=b''
+    while True:
+        c=s.read(4096)
+        if not c: break
+        buf+=c
+    s.timeout=0.05; return buf
+s.reset_input_buffer()
+for c in cmds:
+    s.write(b'\x03'); time.sleep(0.3); rd(0.4)
+    s.write(b'\r'); time.sleep(0.4); rd(0.6)
+    s.write(c.encode()+b'\r'); time.sleep(gap)
+    print('=== %s\n%s'%(c, rd(1.4).decode('latin1').replace('\r','\\r')), flush=True)
+s.close()
+
+## /home/explorer/probe/seq2.py
+import sys, time, serial
+s=serial.Serial('/dev/ttySC0',4800,timeout=0.05,rtscts=False,dsrdtr=False,write_timeout=2)
+def rd(t):
+    s.timeout=t; buf=b''
+    while True:
+        c=s.read(4096)
+        if not c: break
+        buf+=c
+    s.timeout=0.05; return buf
+s.reset_input_buffer(); s.write(b'\r'); time.sleep(0.5); rd(1.0)
+for c in sys.argv[1:]:
+    if c=='ETX': s.write(b'\x03')
+    elif c=='CR': s.write(b'\r')
+    else: s.write(c.encode()+b'\r')
+    time.sleep(0.7)
+    print('>>> %s : %r'%(c, rd(1.3)), flush=True)
+s.close()
+
+## /home/explorer/probe/mm3.py
+import sys, time, serial
+port='/dev/ttySC0'
+addr=int(sys.argv[1],16); data=sys.argv[2].upper()
+assert len(data)%2==0
+s=serial.Serial(port,4800,timeout=0.05,rtscts=False,dsrdtr=False,write_timeout=2)
+def rd(t):
+    s.timeout=t; buf=b''
+    while True:
+        c=s.read(4096)
+        if not c: break
+        buf+=c
+    s.timeout=0.05; return buf
+def waitfor(pat, tmo=4.0):
+    t0=time.time(); buf=b''
+    while time.time()-t0<tmo:
+        buf+=s.read(256); time.sleep(0.02)
+        if pat in buf: return buf,True
+    return buf,False
+s.reset_input_buffer(); s.write(b'\x03'); time.sleep(0.4); rd(0.8)
+s.write(b'\r'); time.sleep(0.4); rd(0.6)
+s.write(b'MM %X\r'%addr); time.sleep(0.6)
+b,ok=waitfor(b'?')
+if not ok: print('no MM prompt:',repr(b)); s.close(); sys.exit(1)
+for i in range(0,len(data),2):
+    for attempt in range(3):
+        s.write((data[i:i+2]+'\r').encode())
+        b,ok=waitfor(b'?',2.0)
+        if ok: break
+        print('retry byte',i,repr(b))
+    else:
+        print('FAILED at offset',i); break
+print('last prompt:',repr(b[-24:]))
+s.write(b'\x03'); time.sleep(0.4); print('exit:',repr(rd(0.8)))
+s.close()
+
+## /home/explorer/probe/dump2.py
+import sys, time, serial, re
+start=int(sys.argv[1],16); end=int(sys.argv[2],16); out=sys.argv[3]
+maxsec=float(sys.argv[4]) if len(sys.argv)>4 else 300
+s=serial.Serial('/dev/ttySC0',4800,timeout=0.2,rtscts=False,dsrdtr=False,write_timeout=2)
+def rd(t):
+    s.timeout=t; b=b''
+    while True:
+        c=s.read(4096)
+        if not c: break
+        b+=c
+    s.timeout=0.2; return b
+s.reset_input_buffer(); s.write(b'\r'); time.sleep(0.5); rd(1.0)
+img={}
+s.write(("MD %X %X"%(start,end)).encode()+b'\r')
+t0=time.time(); acc=b''; n=0; last=-1; idle=0
+while time.time()-t0 < maxsec:
+    d=s.read(8192)
+    if not d:
+        idle+=1
+        if idle>25: break
+        time.sleep(0.2); continue
+    idle=0; acc+=d
+    while True:
+        i=acc.find(b'\r\n')
+        if i<0: break
+        ln=acc[:i]; acc=acc[i+2:]
+        m=re.match(rb'^([0-9A-Fa-f]{6})\s+((?:[0-9A-Fa-f]{2}[ ]+){15}[0-9A-Fa-f]{2})', ln)
+        if m:
+            a=int(m.group(1),16)
+            toks=m.group(2).split()
+            for k,t in enumerate(toks): img[a+k]=int(t,16)
+            n+=1; last=a
+    if last>=end: break
+s.write(b'\r'); time.sleep(0.4); rd(0.8)
+s.close()
+open(out+'.raw','wb').write(open(out+'.raw','rb').read() if False else b'')
+if img:
+    lo=min(img); hi=max(img)
+    blob=bytearray(b'\xff'*(hi-lo+1))
+    for k,v in img.items(): blob[k-lo]=v
+    open(out,'wb').write(("%06X\n"%lo).encode()+bytes(blob))
+    print("lines=%d range=%06X-%06X bytes=%d -> %s"%(n,lo,hi,len(blob),out))
+else: print("nothing")

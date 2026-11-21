@@ -1,0 +1,47 @@
+=== DT node: /sys/firmware/devicetree/base/soc/spi@7e215080/sc16is752@0
+total 0
+-r--r--r-- 1 root root  4 Nov 20 23:14 clocks
+-r--r--r-- 1 root root 14 Nov 20 23:14 compatible
+-r--r--r-- 1 root root  4 Nov 20 23:14 #gpio-cells
+-r--r--r-- 1 root root  0 Nov 20 23:14 gpio-controller
+-r--r--r-- 1 root root  4 Nov 20 23:14 interrupt-parent
+-r--r--r-- 1 root root  8 Nov 20 23:14 interrupts
+-r--r--r-- 1 root root 10 Nov 20 23:14 name
+-r--r--r-- 1 root root  4 Nov 20 23:14 phandle
+-r--r--r-- 1 root root  4 Nov 20 23:14 reg
+-r--r--r-- 1 root root  4 Nov 20 23:14 spi-max-frequency
+compatible             =  6e 78 70 2c 73 63 31 36 69 73 37 35 32 00
+reg                    =  00 00 00 00
+interrupts             =  00 00 00 18 00 00 00 02
+interrupt-parent       =  00 00 00 07
+spi-max-frequency      =  00 3d 09 00
+
+=== parent spi@7e215080 children:
+#address-cells
+clocks
+compatible
+cs-gpios
+interrupts
+name
+phandle
+pinctrl-0
+pinctrl-names
+reg
+sc16is752@0
+#size-cells
+status
+
+=== all sc16is752 DT nodes under /proc/device-tree:
+
+=== modules:
+Module                  Size  Used by
+fuse                  126976  3
+8021q                  32768  0
+garp                   16384  1 8021q
+stp                    16384  1 garp
+llc                    16384  2 garp,stp
+sc16is7xx              20480  0
+regmap_spi             16384  1 sc16is7xx
+=== driver bind:
+spi1.0
+/sys/bus/spi/devices/spi1.0 -> spi:sc16is752

@@ -1,0 +1,55 @@
+### EVIDENCE 24 - ROM disassembler string/mnemonic tables (offline analysis of the ROM extracted from device X)
+### ROM file: evidence/20_rom_8000_BFFF.bin  sha256: f9e64c892ee6b704d06678b96f7af7d68561d6fb097905aa7726c8f166c93c6b
+### command: python3 /tmp/explorer-run/disstab.py   (run in /home/lab/code/ai_projects/explorer)
+PART 1 - how many times each 68000 mnemonic string appears anywhere in the ROM
+   ADD     9 occurrence(s)
+   AND     1 occurrence(s)
+   BSR     1 occurrence(s)
+   CHK     2 occurrence(s)
+   CMP     4 occurrence(s)
+   DIVS    1 occurrence(s)
+   DIVU    1 occurrence(s)
+   EOR     1 occurrence(s)
+   EXT     2 occurrence(s)
+   LEA     1 occurrence(s)
+   MOVE    10 occurrence(s)
+   MOVEQ   1 occurrence(s)
+   MULS    1 occurrence(s)
+   MULU    1 occurrence(s)
+   NBC     2 occurrence(s)
+   NEG     2 occurrence(s)
+   NOT     4 occurrence(s)
+   PEA     1 occurrence(s)
+   SBC     2 occurrence(s)
+   SUB     6 occurrence(s)
+   SWAP    1 occurrence(s)
+   TAS     1 occurrence(s)
+   TRAP    4 occurrence(s)
+
+PART 2 - printable runs >=12 chars that contain a mnemonic (disassembler string tables)
+   ROM $80DE  NuPHYSICAL ADDRESS=
+   ROM $9AB4  NuINVALID ADDRESS=
+   ROM $BEE7  LUNDEFINED TRAP 14
+
+PART 3 - raw hex of the two packed mnemonic-table regions (records are
+         <opcode-ish byte><2-5 char mnemonic>, no separators)
+   ROM $A588-$A600:
+     00A588  10 80 41 42 43 C4 00 C1 00 41 44 44 C1 02 D0 C0  ..ABC....ADD....
+     00A598  41 44 44 C9 03 06 00 41 44 44 D1 04 50 00 41 44  ADD....ADD..P.AD
+     00A5A8  44 D8 05 D1 00 41 44 C4 01 D0 00 41 4E 44 C9 1C  D....AD....AND..
+     00A5B8  02 00 41 4E C4 06 C0 00 41 53 CC 07 E1 00 41 53  ..AN....AS....AS
+     00A5C8  D2 07 E0 00 42 52 C1 4A 60 00 42 48 C9 4A 62 00  ....BR.J`.BH.Jb.
+     00A5D8  42 4C D3 4A 63 00 42 43 C3 4A 64 00 42 43 D3 4A  BL.Jc.BC.Jd.BC.J
+     00A5E8  65 00 42 4E C5 4A 66 00 42 45 D1 4A 67 00 42 56  e.BN.Jf.BE.Jg.BV
+     00A5F8  C3 4A 68 00 42 56 D3 4A 69 00 42 50 CC 4A 6A 00  .Jh.BV.Ji.BP.Jj.
+   ROM $BD80-$BE20:
+     00BD80  45 4F D2 43 4D D0 4D 4F 56 C5 4E 45 47 D8 43 4C  EO.CM.MOV.NEG.CL
+     00BD90  D2 4E 45 C7 4E 4F D4 4E 42 43 C4 50 45 41 2E CC  .NE.NO.NBC.PEA..
+     00BDA0  53 57 41 50 2E D7 4D 4F 56 45 CD 45 58 54 2E D7  SWAP..MOVE.EXT..
+     00BDB0  45 58 54 2E CC 54 53 D4 54 41 53 2E C2 54 52 41  EXT..TS.TAS..TRA
+     00BDC0  D0 4C 49 4E CB 55 4E 4C CB 52 45 53 45 D4 4E 4F  .LIN.UNL.RESE.NO
+     00BDD0  D0 53 54 4F D0 52 54 C5 52 54 D3 54 52 41 50 D6  .STO.RT.RT.TRAP.
+     00BDE0  52 54 D2 4A 53 D2 4A 4D D0 43 48 4B 2E D7 4C 45  RT.JS.JM.CHK..LE
+     00BDF0  41 2E CC 41 44 44 D1 53 55 42 D1 D3 44 C2 C2 4D  A..ADD.SUB..D..M
+     00BE00  4F 56 45 51 2E CC 4F D2 44 49 56 55 2E D7 44 49  OVEQ..O.DIVU..DI
+     00BE10  56 53 2E D7 53 42 43 C4 53 55 C2 53 55 42 D8 43  VS..SBC.SU.SUB.C

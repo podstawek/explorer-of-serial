@@ -1,0 +1,26 @@
+### EVIDENCE 22 - ROM scan for TRAP instructions (offline analysis of the ROM extracted from device X)
+### ROM file: evidence/20_rom_8000_BFFF.bin  sha256: f9e64c892ee6b704d06678b96f7af7d68561d6fb097905aa7726c8f166c93c6b
+### command: python3 /tmp/explorer-run/trapscan.py   (run in /home/lab/code/ai_projects/explorer)
+scan: every word-aligned occurrence of a TRAP opcode 4E40-4E4F in the extracted ROM
+(TRAP #n = 0100 1110 1nnn 1111 = $4E4n).  For each hit: ROM address, word,
+and the 16 bytes around it as ASCII so the reader can see what the bytes really are.
+
+total word-aligned 4E4n hits in 8192 words: 12
+
+  $8EC0  word=$4E4F (TRAP #15)   context ASCII:   a.....g.<.NO.C..<.<.  a.`.
+  $912A  word=$4E4F (TRAP #15)   context ASCII: K...a.....`.NOT HEX=. CHKSUM
+  $9E0E  word=$4E4F (TRAP #15)   context ASCII: Nu..PRINTER NOT READY...a6..
+  $A5B4  word=$4E44 (TRAP #4)   context ASCII: D....AD....AND....AN....AS..
+  $A778  word=$4E45 (TRAP #5)   context ASCII: L....NBC..H.NEG..@.NE..D.NO.
+  $A87E  word=$4E40 (TRAP #0)   context ASCII: RAP..NvTRA..N@TS..J.UNL..NX.
+  $BCA0  word=$4E40 (TRAP #0)   context ASCII: NXE...NP6...N@@...L.....J.=.
+  $BD8A  word=$4E45 (TRAP #5)   context ASCII: D.EO.CM.MOV.NEG.CL.NE.NO.NBC
+  $BD94  word=$4E4F (TRAP #15)   context ASCII: V.NEG.CL.NE.NO.NBC.PEA..SWAP
+  $BDC6  word=$4E4C (TRAP #12)   context ASCII: S..TRA.LIN.UNL.RESE.NO.STO.R
+  $BDCE  word=$4E4F (TRAP #15)   context ASCII: IN.UNL.RESE.NO.STO.RT.RT.TRA
+  $BEEE  word=$4E45 (TRAP #5)   context ASCII: ."`..LUNDEFINED TRAP 14."Q`.
+
+context windows above are all string data; none is executable code.
+Nearest string constants containing the hit bytes:
+   NOT HEX=             at ROM $912A
+   PRINTER NOT READY    at ROM $9E06

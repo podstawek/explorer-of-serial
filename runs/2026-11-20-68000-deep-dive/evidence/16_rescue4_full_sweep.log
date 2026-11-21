@@ -1,0 +1,40 @@
+=== PHASE 1: format sweep on ttySC0 ===
+110 8N1                    idle=0 brk=0 ctla=0 HE=0 brk=0 
+300 8N1                    idle=0 brk=0 ctla=0 HE=0 brk=0 
+600 8N1                    idle=0 brk=0 ctla=0 HE=0 brk=0 
+1200 8N1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+2400 8N1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+4800 8N1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+9600 8N1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+19200 8N1                  idle=0 brk=0 ctla=0 HE=0 brk=0 
+38400 8N1                  idle=0 brk=0 ctla=0 HE=0 brk=0 
+57600 8N1                  idle=0 brk=0 ctla=0 HE=0 brk=0 
+115200 8N1                 idle=0 brk=0 ctla=0 HE=0 brk=0 
+4800 7E1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+4800 7O1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+4800 8O1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+4800 8E1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+4800 7N2                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+9600 7E1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+9600 7O1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+9600 8O1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+9600 8E1                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+9600 7N2                   idle=0 brk=0 ctla=0 HE=0 brk=0 
+=== PHASE 2: control-character sweep at 4800 8N1 ===
+  (control sweep done)
+=== PHASE 3: long breaks ===
+  break   100 ms -> 0 bytes b''
+  break   500 ms -> 0 bytes b''
+  break  1000 ms -> 0 bytes b''
+  break  2000 ms -> 0 bytes b''
+  break  5000 ms -> 0 bytes b''
+=== PHASE 4: ttySC1 ===
+ttySC1 4800 8N1            idle=0 brk=0 ctla=0 HE=0 brk=0 
+ttySC1 9600 8N1            idle=0 brk=0 ctla=0 HE=0 brk=0 
+ttySC1 1200 8N1            idle=0 brk=0 ctla=0 HE=0 brk=0 
+=== PHASE 5: backoff retries ===
+retry after 30s            idle=0 brk=0 ctla=0 HE=0 brk=0 
+retry after 60s            idle=0 brk=0 ctla=0 HE=0 brk=0 
+retry after 120s           idle=0 brk=0 ctla=0 HE=0 brk=0 
+retry after 180s           idle=0 brk=0 ctla=0 HE=0 brk=0 
+=== SWEEP COMPLETE ===

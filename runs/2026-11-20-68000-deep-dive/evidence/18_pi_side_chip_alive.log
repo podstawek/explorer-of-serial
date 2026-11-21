@@ -1,0 +1,19 @@
+=== Pi-side converter health check  Sat Nov 21 02:13:21 UTC 2026 ===
+--- command: ssh pi 'cd /home/explorer/scratch; python3 pcm.py'
+/dev/ttySC0 TIOCMGET = 0x01E6
+   pyserial modem lines: CTS=True DSR=True RI=True CD=True  dsrdtr=False rtscts=False out_of_waiting=0
+   after write: out_waiting=0 in_waiting=0
+   0.3s later:  out_waiting=0 in_waiting=0  read=b''
+/dev/ttySC1 TIOCMGET = 0x01E6
+   pyserial modem lines: CTS=True DSR=True RI=True CD=True  dsrdtr=False rtscts=False out_of_waiting=0
+   after write: out_waiting=0 in_waiting=0
+   0.3s later:  out_waiting=0 in_waiting=0  read=b''
+driver still bound: 1
+
+--- stty (my termios on the port):
+speed 4800 baud; rows 0; columns 0; line = 0;
+intr = ^C; quit = ^\; erase = ^?; kill = ^U; eof = ^D; eol = <undef>;
+eol2 = <undef>; swtch = <undef>; start = ^Q; stop = ^S; susp = ^Z; rprnt = ^R;
+werase = ^W; lnext = ^V; discard = ^O; min = 0; time = 0;
+
+(no stray holders above = none)

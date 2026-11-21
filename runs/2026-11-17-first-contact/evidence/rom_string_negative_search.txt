@@ -1,0 +1,17 @@
+### command: python3 byte-search of evidence/rom_8000_bfff.bin (16384 bytes, captured via MD sweeps of $8000-$BFFF)
+### file sha256: f9e64c892ee6b704d06678b96f7af7d68561d6fb097905aa7726c8f166c93c6b
+search b'68000'       -> 0 hit(s)
+search b'68010'       -> 0 hit(s)
+search b'68EC000'     -> 0 hit(s)
+search b'68008'       -> 0 hit(s)
+search b'MOTOROLA'    -> 0 hit(s)
+search b'Motorola'    -> 0 hit(s)
+search b'motorola'    -> 0 hit(s)
+search b'EXOR'        -> 0 hit(s)
+search b'Exor'        -> 0 hit(s)
+search b'exor'        -> 0 hit(s)
+search b'M68'         -> 0 hit(s)
+search b'060'         -> 0 hit(s)
+search b'CPU32'       -> 0 hit(s)
+search b'DBUG'        -> 0 hit(s)
+ASCII runs >=6 chars containing '68': []

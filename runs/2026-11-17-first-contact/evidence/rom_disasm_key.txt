@@ -1,0 +1,128 @@
+            0x00009c72      lea.l 0x10040.l, a0
+            0x00009c78      tst.l 0x624.w
+        ┌─< 0x00009c7c      beq.b 0x9c82
+        │   0x00009c7e      movea.l 0x624.w, a0
+       ┌└─> 0x00009c82      rts
+       ╎    0x00009c84      lea.l 0x10041.l, a0
+       ╎    0x00009c8a      tst.l 0x628.w
+       └──< 0x00009c8e      beq.b 0x9c82
+            0x00009c90      movea.l 0x628.w, a0
+            0x00009c94      rts
+            0x00009c96      lea.l 0x540.w, a5
+            0x00009c9a      movea.l a5, a6
+        ┌─> 0x00009e1a      bsr.b 0x9e52
+        ╎   0x00009e1c      move.b (a0), d1
+        ╎   0x00009e1e      andi.b 0x2, d1
+        └─< 0x00009e22      beq.b 0x9e1a
+            0x00009e24      move.b d0, 0x2(a0)
+        ┌─< 0x00009e28      beq.b 0x9e34
+        │   0x00009e2a      tst.w 0x652.w
+       ┌──< 0x00009e2e      beq.b 0x9e34
+       ││   0x00009e30      bsr.w 0x9d7a
+       └└─> 0x00009e34      move.b (a0), d1
+            0x00009e36      andi.b 0x1, d1
+        ┌─< 0x00009e3a      beq.b 0x9e50
+            0x00009d7a      movem.l d0-d1/d7/a0/a5-a6, -(a7)
+        ┌─> 0x00009d7e      bsr.w 0x9e52
+        ╎   0x00009d82      movea.l 0x64e.w, a0
+        ╎   0x00009d86      move.b 0x3(a7), d0
+        ╎   0x00009d8a      andi.b 0x7f, d0
+        ╎   0x00009d8e      cmpi.b 0xd, d0
+       ┌──< 0x00009d92      beq.b 0x9daa
+       │╎   0x00009d94      cmpi.b 0xa, d0
+      ┌───< 0x00009d98      beq.b 0x9daa
+      ││╎   0x00009d9a      cmpi.b 0x20, d0
+     ┌────< 0x00009d9e      blt.b 0x9da6
+     │││╎   0x00009da0      cmpi.b 0x7f, d0
+    ┌─────< 0x00009da4      blt.b 0x9daa
+    │└────> 0x00009da6      move.b 0x2e, d0
+    └─└└──> 0x00009daa      move.b d0, 0x1(a0)
+        ╎   0x00009dae      move.b 0x68, 0x1000d.l
+        ╎   0x00009db6      move.b 0x60, 0x1000d.l
+       ┌──> 0x00009dbe      bsr.w 0x9e52
+       ╎╎   0x00009dc2      move.b 0x3(a0), d0
+       ╎╎   0x00009dc6      andi.b 0x3, d0
+       ╎╎   0x00009dca      subq.b 0x1, d0
+      ┌───< 0x00009dcc      beq.b 0x9df6
+      │╎╎   0x00009dce      move.w 0x652.w, d7
+      │╎╎   0x00009dd2      clr.w 0x652.w
+      │╎╎   0x00009dd6      lea.l 0x9e04(pc), a5
+      │╎╎   0x00009dda      bsr.w 0x80f2
+      │╎╎   0x00009dde      bsr.w 0x9c0a
+     ┌────> 0x00009de2      bsr.b 0x9e52
+     ╎│╎╎   0x00009de4      move.b 0x3(a0), d0
+     ╎│╎╎   0x00009de8      andi.b 0x3, d0
+     ╎│╎╎   0x00009dec      subq.b 0x1, d0
+     └────< 0x00009dee      bne.b 0x9de2
+      │╎╎   0x00009df0      move.w d7, 0x652.w
+      │╎└─< 0x00009df4      bra.b 0x9d7e
+      └───> 0x00009df6      btst.b 0x0, 0xb(a0)
+       └──< 0x00009dfc      beq.b 0x9dbe
+            0x00009dfe      movem.l (a7)+, d0-d1/d7/a0/a5-a6
+            0x00009e02      rts
+            0x00009e04      movep.w 0x5052(a2), d6
+            0x00009e08      invalid
+            0x00009e0a      addq.w 0x2, d5
+            0x00009e0c      addq.b 0x1, -(a0)
+            0x00009e0e      trap 0xf
+            0x00009e10      addq.b 0x2, -(a0)
+            0x00009e12      addq.w 0x1, d5
+            0x00009e14      invalid
+        ╎   0x0000a1bc      moveq 0xff, d0
+       ┌──< 0x0000a1be      bra.b 0xa1c2
+       │╎   0x0000a1c0      clr.l d0
+       └──> 0x0000a1c2      move.w d0, 0x652.w
+        └─< 0x0000a1c6      bra.w 0x8232
+            0x0000a1ca      move.l d7, -(a7)
+
+### getchar + break escape (r2 -q -a m68k -b 32 -m 0x8000 -c 'pd 12 @ 0x9fa0' rom_8000_bfff.bin)
+        ╎   0x00009fa0      4cdf0101       movem.l (a7)+, d0/a0
+        ╎   0x00009fa4      4e75           rts
+       ┌──> 0x00009fa6      1210           move.b (a0), d1
+       ╎╎   0x00009fa8      02010010       andi.b 0x10, d1
+       ╎└─< 0x00009fac      6600fed0       bne.w 0x9e7e
+       ╎    0x00009fb0      1210           move.b (a0), d1
+       ╎    0x00009fb2      02010001       andi.b 0x1, d1
+       └──< 0x00009fb6      67ee           beq.b 0x9fa6
+            0x00009fb8      10280002       move.b 0x2(a0), d0
+            0x00009fbc      0200007f       andi.b 0x7f, d0
+            0x00009fc0      4e75           rts
+            0x00009fc2      4ab80620       tst.l 0x620.w
+### ACIA init: control $43 then format byte $64C (pd 12 @ 0x9f70)
+            0x00009f70      10b8064d       move.b 0x64d.w, (a0)
+            0x00009f74      4cdf0101       movem.l (a7)+, d0/a0
+            0x00009f78      4e75           rts
+            0x00009f7a      48e78080       movem.l d0/a0, -(a7)
+            0x00009f7e      203c0000c350   move.l 0xc350, d0
+        ┌─> 0x00009f84      5380           subq.l 0x1, d0
+        └─< 0x00009f86      66fc           bne.b 0x9f84
+            0x00009f88      6100fce8       bsr.w 0x9c72
+            0x00009f8c      10bc0043       move.b 0x43, (a0)
+            0x00009f90      10b8064c       move.b 0x64c.w, (a0)
+            0x00009f94      6100fcee       bsr.w 0x9c84
+            0x00009f98      10bc0043       move.b 0x43, (a0)
+### format default + SR init (pd 8 @ 0x8208)
+            0x00008208      064e           invalid
+            0x0000820a      117c00a0000f   move.b 0xa0, 0xf(a0)
+            0x00008210      31fc1515064c   move.w 0x1515, 0x64c.w
+            0x00008216      61001d62       bsr.w 0x9f7a
+            0x0000821a      21fc000000..   move.l 0x0, 0x4e6.w
+            0x00008222      487a3c4c       pea.l 0xbe70(pc)
+            0x00008226      21df00b8       move.l (a7)+, 0xb8.w
+            0x0000822a      21fcfe00bf..   move.l 0xfe00bf14, 0x656.w
+### third I/O device at $10000 programmed at init (pd 12 @ 0x81d2)
+            0x000081d2      21fc000100..   move.l 0x10000, 0x64e.w
+            0x000081da      207c00010000   movea.l 0x10000, a0
+            0x000081e0      203c0000ff00   move.l 0xff00, d0
+            0x000081e6      01c80001       movep.l d0, 0x1(a0)
+            0x000081ea      117c0060000d   move.b 0x60, 0xd(a0)
+            0x000081f0      117c00a0000f   move.b 0xa0, 0xf(a0)
+            0x000081f6      117c00300001   move.b 0x30, 0x1(a0)
+            0x000081fc      117c00a8000f   move.b 0xa8, 0xf(a0)
+            0x00008202      21fc000100..   move.l 0x10010, 0x64e.w
+            0x0000820a      117c00a0000f   move.b 0xa0, 0xf(a0)
+            0x00008210      31fc1515064c   move.w 0x1515, 0x64c.w
+            0x00008216      61001d62       bsr.w 0x9f7a
+### MOVEC/PMOVE byte-pattern search (no hits = absent)
+4e7b : (no output above = no hits)
+4e7c : (no output above = no hits)

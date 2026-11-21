@@ -1,0 +1,24 @@
+Recovery attempts on device X after the `PA` hang (all produced ZERO received bytes).
+Host-side faults ruled out first: `fuser /dev/ttySC0` -> empty; port opens/closes fine;
+TIOCMGET = 0x1E6 (CTS|CAR|DSR|RI|DTR|RTS); no stray process; 30 s passive listen -> 0 bytes.
+1) port close/reopen, CR, LF, ETX, ESC, Ctrl-A                     -> 0 bytes
+2) serial BREAK 0.2 s / 1 s / 3 s                                   -> 0 bytes
+3) DTR/RTS drop and long cycles (10 s / 7 s)                        -> 0 bytes
+4) prn.py: ttySC1 at 4800/9600/2400/19200/1200 x 4 DTR/RTS combos + payloads -> 0 bytes
+5) recov.py: blind NOPA / NOBR / HE; break + {CR,Ctrl-C,R,r,Ctrl-X,Ctrl-Z,Ctrl-D,ESC} -> 0 bytes
+6) brute.py: all 256 single bytes, then all 256 bytes each + CR     -> 0 bytes
+7) last.py: both ports x 11 bauds (110..115200) x 7 framings, with ttySC1 poke -> 0 bytes
+8) flood2.py phase A (00:26 UTC): DTR/RTS matrix, port kept open, 3 s each + CR probe
+      dtr=True rts=True   probe -> b''
+      dtr=True rts=False  probe -> b''
+      dtr=False rts=True  probe -> b''
+      dtr=False rts=False probe -> b''
+9) flood2.py phase B: 4800-7N1, 4800-8E1, 4800-8O1, 4800-7E2, 4800-8N2, 4800-5N2,
+   9600/2400/1200/19200-8N1; each = 1.2 s continuous NUL flood + 3x "HE\r"; TOTAL RX: 0
+10) flood2.py phase C: continuous floods on ttySC1 (printer UART?) 4800/9600/2400/1200/
+    19200/115200/300 with NUL / 0x11 / 'HELLO\r\n' payloads while listening ttySC0 -> 0
+11) final liveness probe 00:41 UTC: CR + "HE\r" on ttySC0 and ttySC1 @4800 -> RX 0 both.
+Host-side limits: `sudo -n true` -> "sudo: a password is required" -> cannot reboot the Pi,
+cannot export GPIO, cannot unbind/rebind the SC16IS752 driver, no PDU. The escape that the
+ROM does provide (console status bit4 -> "\n\nBREAK" -> monitor) is not reachable: nothing
+drivable from the Pi (TX data, DTR, RTS, break) sets that bit.
